@@ -9,6 +9,7 @@ api
   .use('/users', require('./users'))
 
 // Send along any errors
+//more errors
 api.use((err, req, res, next) => {
   res.status(500).send(err)
 })
