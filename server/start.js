@@ -32,7 +32,7 @@ module.exports = app
   // We'll store the whole session in a cookie
 
   /*
-   * Setup express-seesion
+   * Setup express-seesion asdfsadf
    */
   .use(require('cookie-session') ({
     name: 'session',
