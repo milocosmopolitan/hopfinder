@@ -6,4 +6,6 @@
 
 const User = require('./user')
 
+
+// table association
 module.exports = {User}

@@ -10,6 +10,15 @@ const passport = require('passport')
 // saying require('APP/whatever').
 //
 // This next line requires our root index.js:
+
+
+/*
+ * Create helper session storage file 
+
+ const SessionStorage = require('filepath')(express)
+ */
+
+
 const pkg = require('APP')
 
 const app = express()
@@ -21,6 +30,10 @@ if (!pkg.isProduction && !pkg.isTesting) {
 
 module.exports = app
   // We'll store the whole session in a cookie
+
+  /*
+   * Setup express-seesion
+   */
   .use(require('cookie-session') ({
     name: 'session',
     keys: [process.env.SESSION_SECRET || 'an insecure secret key'],
