@@ -35,16 +35,16 @@ const auth = require('express').Router()
 
 // Facebook needs the FACEBOOK_CLIENT_ID and FACEBOOK_CLIENT_SECRET
 // environment variables.
-OAuth.setupStrategy({
-  provider: 'facebook',
-  strategy: require('passport-facebook').Strategy,
-  config: {
-    clientID: env.FACEBOOK_CLIENT_ID,
-    clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/login/facebook`,
-  },
-  passport
-})
+// OAuth.setupStrategy({
+//   provider: 'facebook',
+//   strategy: require('passport-facebook').Strategy,
+//   config: {
+//     clientID: env.FACEBOOK_CLIENT_ID,
+//     clientSecret: env.FACEBOOK_CLIENT_SECRET,
+//     callbackURL: `${app.rootUrl}/api/auth/login/facebook`,
+//   },
+//   passport
+// })
 
 // Google needs the GOOGLE_CONSUMER_SECRET AND GOOGLE_CONSUMER_KEY
 // environment variables.
@@ -59,20 +59,7 @@ OAuth.setupStrategy({
   passport
 })
 
-// Github needs the GITHUB_CLIENT_ID AND GITHUB_CLIENT_SECRET
-// environment variables.
-OAuth.setupStrategy({
-  provider: 'github',
-  strategy: require('passport-github2').Strategy,
-  config: {
-    clientID: env.GITHUB_CLIENT_ID,
-    clientSecrets: env.GITHUB_CLIENT_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/login/github`,
-  },
-  passport
-})
 
-// Other passport configuration:
 
 
 passport.serializeUser((user, done) => {
@@ -96,28 +83,28 @@ passport.deserializeUser(
   }
 )
 
-passport.use(new (require('passport-local').Strategy) (
-  (email, password, done) => {
-    debug('will authenticate user(email: "%s")', email)
-    User.findOne({where: {email}})
-      .then(user => {
-        if (!user) {
-          debug('authenticate user(email: "%s") did fail: no such user', email)
-          return done(null, false, { message: 'Login incorrect' })
-        }
-        return user.authenticate(password)
-          .then(ok => {
-            if (!ok) {
-              debug('authenticate user(email: "%s") did fail: bad password')              
-              return done(null, false, { message: 'Login incorrect' })
-            }
-            debug('authenticate user(email: "%s") did ok: user.id=%d', user.id)
-            done(null, user)              
-          })
-      })
-      .catch(done)
-  }
-))
+// passport.use(new (require('passport-local').Strategy) (
+//   (email, password, done) => {
+//     debug('will authenticate user(email: "%s")', email)
+//     User.findOne({where: {email}})
+//       .then(user => {
+//         if (!user) {
+//           debug('authenticate user(email: "%s") did fail: no such user', email)
+//           return done(null, false, { message: 'Login incorrect' })
+//         }
+//         return user.authenticate(password)
+//           .then(ok => {
+//             if (!ok) {
+//               debug('authenticate user(email: "%s") did fail: bad password')              
+//               return done(null, false, { message: 'Login incorrect' })
+//             }
+//             debug('authenticate user(email: "%s") did ok: user.id=%d', user.id)
+//             done(null, user)              
+//           })
+//       })
+//       .catch(done)
+//   }
+// ))
 
 auth.get('/whoami', (req, res) => res.send(req.user))
 
