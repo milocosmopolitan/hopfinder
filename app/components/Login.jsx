@@ -1,19 +1,14 @@
 import React from 'react';
 import { login } from 'APP/app/reducers/auth';
 import { connect } from 'react-redux';
-import { Grid, Row, Col } from 'react-bootstrap';
-
+import { Link, browserHistory } from 'react-router'
 
 const Login = ({ login }) => {
 
   function loginWithCredential(evt){
     evt.preventDefault()
     login(evt.target.email.value, evt.target.password.value)
-  }
-
-  function loginWithGoogle(){
-    console.log('user clicked to login with google oAuth')
-
+    browserHistory.push('/')
   }
 
   return (
@@ -33,7 +28,7 @@ const Login = ({ login }) => {
           <button className="button" type="submit">Login</button>            
         </form>
       {/* login with google */}
-        <button className="button" onClick={loginWithGoogle}>Login with google</button>
+        <Link to="/api/auth/google"><button className="button">Login with google</button></Link>
       </div>
     </div>
   )
