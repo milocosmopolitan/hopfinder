@@ -48,16 +48,16 @@ const auth = require('express').Router()
 
 // Google needs the GOOGLE_CONSUMER_SECRET AND GOOGLE_CONSUMER_KEY
 // environment variables.
-OAuth.setupStrategy({
-  provider: 'google',
-  strategy: require('passport-google-oauth').Strategy,
-  config: {
-    consumerKey: env.GOOGLE_CONSUMER_KEY,
-    consumerSecret: env.GOOGLE_CONSUMER_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/login/google`,
-  },
-  passport
-})
+// OAuth.setupStrategy({
+//   provider: 'google',
+//   strategy: require('passport-google-oauth').Strategy,
+//   config: {
+//     consumerKey: env.GOOGLE_CONSUMER_KEY,
+//     consumerSecret: env.GOOGLE_CONSUMER_SECRET,
+//     callbackURL: `${app.rootUrl}/api/auth/login/google`,
+//   },
+//   passport
+// })
 
 
 
@@ -83,28 +83,7 @@ passport.deserializeUser(
   }
 )
 
-// passport.use(new (require('passport-local').Strategy) (
-//   (email, password, done) => {
-//     debug('will authenticate user(email: "%s")', email)
-//     User.findOne({where: {email}})
-//       .then(user => {
-//         if (!user) {
-//           debug('authenticate user(email: "%s") did fail: no such user', email)
-//           return done(null, false, { message: 'Login incorrect' })
-//         }
-//         return user.authenticate(password)
-//           .then(ok => {
-//             if (!ok) {
-//               debug('authenticate user(email: "%s") did fail: bad password')              
-//               return done(null, false, { message: 'Login incorrect' })
-//             }
-//             debug('authenticate user(email: "%s") did ok: user.id=%d', user.id)
-//             done(null, user)              
-//           })
-//       })
-//       .catch(done)
-//   }
-// ))
+auth.use('/google', require('./google'))
 
 // signup, i.e. "let `me` introduce myself"
 auth.post('/signup', function (req, res, next) {
@@ -147,7 +126,10 @@ auth.post('/login', function (req, res, next) {
       
       req.logIn(user, function (err) {
         if (err) return next(err);
-        console.log(user) 
+        // console.log(user) 
+        // req.session.cookie['user'] = user
+        console.log('SESSION FROM LOGIN', req.session)
+        console.log('USER FROM PASSPORT', req.user)
         res.json(user);
 
 

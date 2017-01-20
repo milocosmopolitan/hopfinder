@@ -5,7 +5,9 @@
 // to get access to the User model.
 
 const User = require('./user')
+const Oauth = require('./oauth')
 
+Oauth.belongsTo(User);
 
 // table association
-module.exports = {User}
+module.exports = {User, Oauth}
