@@ -59,20 +59,7 @@ OAuth.setupStrategy({
   passport
 })
 
-// Github needs the GITHUB_CLIENT_ID AND GITHUB_CLIENT_SECRET
-// environment variables.
-// OAuth.setupStrategy({
-//   provider: 'github',
-//   strategy: require('passport-github').Strategy,
-//   config: {
-//     clientID: env.GITHUB_CLIENT_ID,
-//     clientSecrets: env.GITHUB_CLIENT_SECRET,
-//     callbackURL: `${app.rootUrl}/api/auth/login/github`,
-//   },
-//   passport
-// })
 
-// Other passport configuration:
 
 
 passport.serializeUser((user, done) => {
