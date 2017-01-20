@@ -1,7 +1,7 @@
 import React from 'react';
 import { login } from 'APP/app/reducers/auth';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 
 const Login = ({ login }) => {
 
@@ -9,11 +9,6 @@ const Login = ({ login }) => {
     evt.preventDefault()
     login(evt.target.email.value, evt.target.password.value)
     browserHistory.push('/')
-  }
-
-  function loginWithGoogle(){
-    console.log('user clicked to login with google oAuth')
-
   }
 
   return (
@@ -33,7 +28,7 @@ const Login = ({ login }) => {
           <button className="button" type="submit">Login</button>            
         </form>
       {/* login with google */}
-        <button className="button" onClick={loginWithGoogle}>Login with google</button>
+        <Link to="/api/auth/google"><button className="button">Login with google</button></Link>
       </div>
     </div>
   )
