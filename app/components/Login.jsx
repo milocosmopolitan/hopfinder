@@ -1,14 +1,14 @@
 import React from 'react';
 import { login } from 'APP/app/reducers/auth';
 import { connect } from 'react-redux';
-import { Grid, Row, Col } from 'react-bootstrap';
-
+import { browserHistory } from 'react-router'
 
 const Login = ({ login }) => {
 
   function loginWithCredential(evt){
     evt.preventDefault()
     login(evt.target.email.value, evt.target.password.value)
+    browserHistory.push('/')
   }
 
   function loginWithGoogle(){

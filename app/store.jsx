@@ -10,4 +10,8 @@ const store = createStore(rootReducer, applyMiddleware(createLogger(), thunkMidd
 export default store
 
 // Set the auth info at start
-store.dispatch(whoami()) 
+// store.dispatch(whoami()) 
+// function requireAuth(){
+// 	store.dispatch(whoami())
+// 	browserHistory.push('/registrationStep2')
+// }

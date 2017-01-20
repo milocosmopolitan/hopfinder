@@ -1,9 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 const reducer = (state=null, action) => {
   switch(action.type) {
   case AUTHENTICATED:
-    return action.user  
+    return action.user || state
   }
   return state
 }
@@ -33,6 +34,8 @@ export const whoami = () =>
         const user = response.data
         dispatch(authenticated(user))
       })
-      .catch(failed => dispatch(authenticated(null)))
+      .catch(failed => {
+        dispatch(authenticated(null))
+      })
 
 export default reducer
