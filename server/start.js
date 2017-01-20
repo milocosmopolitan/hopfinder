@@ -36,12 +36,9 @@ if (!pkg.isProduction && !pkg.isTesting) {
     maxAge: 30000
   };
 
-module.exports = app
-  // We'll store the whole session in a cookie
+let sessionLife = 86400000;
 
-  /*
-   * Setup express-seesion
-   */
+module.exports = app
 
   .use(session({
     name: 'server-session-cookie-id',

@@ -106,13 +106,67 @@ passport.deserializeUser(
 //   }
 // ))
 
+// signup, i.e. "let `me` introduce myself"
+auth.post('/signup', function (req, res, next) {
+  console.log(req)
+  User.findOrCreate({
+    where: {
+      email: req.body.email
+    },
+    defaults: { // if the user doesn't exist, create including this info
+      password: encrypt(req.body.password)
+    }
+  })
+  .spread((user, created) => {
+    if (created) {
+      // with Passport:
+      req.logIn(user, function (err) {
+        if (err) return next(err);
+        res.json(user);
+      });
+      // // before, without Passport:
+      // req.session.userId = user.id;
+      // res.json(user);
+    } else {
+      res.sendStatus(401); // this user already exists, you cannot sign up
+    }
+  });
+});
+
+
+// login, i.e. "you remember `me`, right?"
+auth.post('/login', function (req, res, next) {  
+  User.findOne({
+    where: { email:req.body.email } // email and password
+  }).then(user => {
+    if (!user) {
+      debug('authenticate user(email: "%s") did fail: no such user', req.body.email)      
+      res.sendStatus(401); // no message; good practice to omit why auth fails
+    } else {
+      // with Passport:    
+      
+      req.logIn(user, function (err) {
+        if (err) return next(err);
+        console.log(user) 
+        res.json(user);
+
+
+      });
+      // // before, without Passport:
+      // req.session.userId = user.id;
+      // res.json(user);
+    }
+  })
+  .catch(next);
+});
+
 auth.get('/whoami', (req, res) => res.send(req.user))
 
-auth.post('/:strategy/login', (req, res, next) =>
-  passport.authenticate(req.params.strategy, {
-    successRedirect: '/'
-  })(req, res, next)
-)
+// auth.post('/:strategy/login', (req, res, next) =>
+//   passport.authenticate(req.params.strategy, {
+//     successRedirect: '/'
+//   })(req, res, next)
+// )
 
 auth.post('/logout', (req, res, next) => {
   req.logout()
