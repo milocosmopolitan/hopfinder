@@ -28,15 +28,22 @@ if (!pkg.isProduction && !pkg.isTesting) {
   app.use(require('volleyball'))
 }
 
+let sessionLife = 86400000;
+
 module.exports = app
   // We'll store the whole session in a cookie
 
   /*
-   * Setup express-seesion asdfsadf
+   * TODO: replace cookie session to express-session
    */
-  .use(require('cookie-session') ({
-    name: 'session',
-    keys: [process.env.SESSION_SECRET || 'an insecure secret key'],
+  .use(require('express-session') ({
+    resave: false,
+    secret: process.env.SESSION_SECRET || 'an insecure secret key',
+    saveUninitialized: true,
+    cookie: {
+      expires: new Date(Date.now()+sessionLife),
+      maxAge: sessionLife
+    }
   }))
 
   // Body parsing middleware
