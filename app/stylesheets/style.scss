@@ -1,0 +1,71 @@
+$primary-color: #ffc000;
+$cream-vivid: #ffecb2;
+$cream-grey: #f0ead9;
+$dark-color: #984b00;
+$pastel-tone: #7f9a78;
+
+$button-bg-color: #348AA7;
+$button-border-color: #166E84;
+
+@import  url(https://fonts.googleapis.com/css?family=Montserrat);
+@import './Navbar.scss';
+
+body{  
+  font-family: Montserrat;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button{
+  padding: 15px;
+  margin: 10px 0;
+  height: 50px;
+  min-width: 100px;
+  background: #549e7a;
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 3px;
+  box-shadow: 0 5px 0px #3f7d5f;
+  border-bottom: 2px solid #276f4c;
+  
+  &:hover{
+    background: darken($button-bg-color,5%);
+    box-shadow: 0 4px 1px darken($button-bg-color,5%);
+    border-bottom: 2px solid darken($button-bg-color,8%);
+    transition: all 0.1s ease-in;
+  }
+  
+  &:active{
+    transform:translateY(4px);
+    border-bottom-width: 2px;
+    box-shadow: none;
+  }
+}
+
+#login-wrapper {
+	background-color: $primary-color;
+	min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+
+	>div{
+		width: 30%;
+		background-color: white;
+		border-radius: 6px;
+		border: 1px solid #EEEEEE;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		padding: 25px;
+	}
+
+	button {
+		width: 100%;
+	}
+}
