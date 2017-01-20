@@ -17,7 +17,7 @@ import { Home, Auth, News } from './routes';
  * This will load our own custom stylesheet(sass) file on the project 
  * =============================
  */
-// require('./stylesheets/style.scss')
+require('./stylesheets/style.scss')
 
 
 /*
