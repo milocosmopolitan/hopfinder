@@ -7,6 +7,7 @@ const {User, Oauth} = require('APP/db/models');
 
 var secret = require('APP/secret');
 
+
 // configuring the strategy (credentials + verification callback)
 passport.use(
   new GoogleStrategy({
@@ -21,9 +22,10 @@ passport.use(
 router.get('/', passport.authenticate('google', { scope: 'email' }));
 
 // handle the callback after Google has authenticated the user
-router.get('/verify',
+router.get('/verify',	
   passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
+  	console.log('verify callback URL')
     res.redirect(`/`);
   }
 );

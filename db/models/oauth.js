@@ -3,6 +3,7 @@
 const debug = require('debug')('oauth')
 const Sequelize = require('sequelize')
 const db = require('APP/db')
+const User = require('APP/db/models/user')
 
 const OAuth = db.define('oauths', {
   uid: Sequelize.STRING,
@@ -22,35 +23,36 @@ const OAuth = db.define('oauths', {
 	indexes: [{fields: ['uid'], unique: true,}],
 })
 
-OAuth.V2 = (accessToken, refreshToken, profile, done) =>
-  this.findOrCreate({
+OAuth.V2 = (accessToken, refreshToken, profile, done) => {
+  
+  return OAuth.findOrCreate({
     where: {
       provider: profile.provider,
       uid: profile.id,
+      accessToken: accessToken
     }})
-    .then(oauth => {
-      debug('provider:%s will log in user:{name=%s uid=%s}',
-        profile.provider,
-        profile.displayName,
-        token.uid)
-      oauth.profileJson = profile
-      return db.Promise.props({
-        oauth,
-        user: token.getUser(),
-        _saveProfile: oauth.save(),
-      })
-    })
-    .then(({ oauth, user }) => user ||
-      User.create({
-        name: profile.displayName,        
-      }).then(user => db.Promise.props({
-        user,
-        _setOauthUser: oauth.setUser(user)
-      }))
-    )
-    .then(({ user }) => done(null, user))
-    .catch(done)
+    .then( oauth => {      
 
+      let data = {
+        name: profile.displayName,        
+        email: profile.emails[0].value,
+        photo: profile.photos[0].value,
+      };
+
+      return User.create(data)
+        .then(user => {
+          return oauth[0].setUser(user)
+        })
+    })     
+    .then(user => {
+      console.log('After User.Create', user)
+      done(null, user)
+    })
+    .catch(err=>{
+      console.error(err)
+      done(err, null)
+    })
+}
 
 // OAuth.setupStrategy =
 // ({

@@ -24,19 +24,23 @@ const app = express()
 
 let sessionSaveUninitialized = false;
 if (!pkg.isProduction && !pkg.isTesting) {
-  sessionSaveUninitialized = true;
+  sessionSaveUninitialized = false;
   // Logging middleware (dev only)
   app.use(require('volleyball'))
 }
-  const sess_options = {
-    path: `${process.cwd()}/temp/sessions/`,
-    useAsync: true,
-    reapInterval: 5000,
-    httpOnly: false,
-    maxAge: 30000
-  };
 
 let sessionLife = 86400000;
+const sess_options = {
+  // genid: function(req) {
+  //   return genuuid() // use UUIDs for session IDs
+  // },
+  path: `${process.cwd()}/temp/sessions/`,
+  useAsync: true,
+  reapInterval: 5000,
+  httpOnly: false,
+  maxAge: sessionLife
+};
+
 
 module.exports = app
 
@@ -44,22 +48,23 @@ module.exports = app
     name: 'server-session-cookie-id',
     store: new FileStore(sess_options),
     secret: 'singlecut',
-    resave: true,
+    resave: false,
     saveUninitialized: sessionSaveUninitialized
   }))
 
-  .use(function printSession(req, res, next) {
-    console.log('req.session', req.session);
-    return next();
-  })
+  // We might use this later
+  // .use(function printSession(req, res, next) {
+  //   console.log('req.session', req.session);
+  //   return next();
+  // })
 
-  .get('/', function initViewsCount(req, res, next) {
-    if(typeof req.session.views === 'undefined') {
-      req.session.views = 1;
-      return res.end('Welcome to the file session demo. Refresh page!');
-    }
-    return next();
-  })
+  // .get('/', function initViewsCount(req, res, next) {
+  //   if(typeof req.session.views === 'undefined') {
+  //     req.session.views = 1;
+  //     return res.end('Welcome to the file session demo. Refresh page!');
+  //   }
+  //   return next();
+  // })
 
   // Body parsing middleware
   .use(bodyParser.urlencoded({ extended: true }))

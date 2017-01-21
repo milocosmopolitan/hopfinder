@@ -28,7 +28,7 @@ const Login = ({ login }) => {
           <button className="button" type="submit">Login</button>            
         </form>
       {/* login with google */}
-        <Link to="/api/auth/google"><button className="button">Login with google</button></Link>
+        <a href="/api/auth/google"><button className="button">Login with Google</button></a>
       </div>
     </div>
   )
