@@ -10,7 +10,7 @@ import Navbar from './components/Navbar'
 // import WhoAmI from './components/WhoAmI'
 
 
-import { Home, Auth, News } from './routes';
+import { Home, Auth, News, Places } from './routes';
 
 
 /*
@@ -53,14 +53,14 @@ class Root extends React.Component {
   constructor(props) {
     super(props);    
   }
-  componentDidMount() {
-    const { user, whoami, location } = this.props;
-    console.log('componentDidMount WHO AM I????')
-    whoami();
-    if(!user && location.pathname !== "/auth") {
-      browserHistory.push('/auth')
-    }
-  }
+  // componentDidMount() {
+  //   const { user, whoami, location } = this.props;
+  //   console.log('componentDidMount WHO AM I????')
+  //   whoami();
+  //   if(!user && location.pathname !== "/auth") {
+  //     browserHistory.push('/auth')
+  //   }
+  // }
   render(){
     const { children, location, user } = this.props
     return ( 
@@ -97,8 +97,9 @@ render (
       <Route path="/" component={App}>
         <IndexRedirect to="/home" />
         <Route path="/home" component={Home} />
-        <Route path="/auth" component={Auth} />
+        // <Route path="/auth" component={Auth} />
         <Route path="/feed" component={News} />
+        <Route path="/places" component={Places} />
       </Route>
     </Router>
   </Provider>,
