@@ -4,7 +4,7 @@ const debug = require('debug')(`${app.name}:auth`)
 const passport = require('passport')
 
 const User = require('APP/db/models/user')
-const OAuth = require('APP/db/models/oauth')
+// const OAuth = require('APP/db/models/oauth')
 const auth = require('express').Router()
 
 const _exists = (filepath) => (
@@ -66,6 +66,46 @@ const _exists = (filepath) => (
 // })
 
 
+const secret = require('APP/secret');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+passport.use(
+  new GoogleStrategy({
+    clientID: secret.google.key,
+    clientSecret: secret.google.secret,
+    callbackURL: '/api/auth/google/verify'
+  },
+  function(accessToken, refreshToken, profile, done){
+    
+    return User.findOrCreate({
+      where: {        
+        google_id: profile.id,
+        accessToken: accessToken
+      }})
+      .then( user => {      
+
+        let data = {
+          name: profile.displayName,        
+          email: profile.emails[0].value,
+          photo: profile.photos[0].value,
+        };
+
+        return user[0].update(data)
+
+        // return User.create(data)
+        //   .then(user => {
+        //     return oauth[0].setUser(user)
+        //   })
+      })     
+      .then(user => {
+        console.log('After User.Create', user)
+        done(null, user)
+      })
+      .catch(err=>{
+        console.error(err)
+        done(err, null)
+      })
+  })
+);
 
 
 passport.serializeUser((user, done) => {

@@ -1,22 +1,14 @@
 const router = require('express').Router();
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
-const {User, Oauth} = require('APP/db/models');
 
-var secret = require('APP/secret');
+const { User } = require('APP/db/models');
 
 
-// configuring the strategy (credentials + verification callback)
-passport.use(
-  new GoogleStrategy({
-    clientID: secret.google.key,
-    clientSecret: secret.google.secret,
-    callbackURL: '/api/auth/google/verify'
-  },
-  Oauth.V2)
-);
+
+
+
 
 // Google authentication and login
 router.get('/', passport.authenticate('google', { scope: 'email' }));
@@ -30,4 +22,8 @@ router.get('/verify',
   }
 );
 
+router.use('/', (req, res, next)=>{
+  if(req.isAuthenticated()) return next()
+  res.redirect('/')
+});
 module.exports = router;

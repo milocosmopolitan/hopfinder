@@ -24,7 +24,7 @@ const app = express()
 
 let sessionSaveUninitialized = false;
 if (!pkg.isProduction && !pkg.isTesting) {
-  sessionSaveUninitialized = false;
+  sessionSaveUninitialized = true;
   // Logging middleware (dev only)
   app.use(require('volleyball'))
 }

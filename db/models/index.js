@@ -6,11 +6,11 @@
 const db = require('APP/db')
 
 const User = require('./user')
-const Oauth = require('./oauth')
+// const Oauth = require('./oauth')
 
-Oauth.belongsTo(User);
+// Oauth.belongsTo(User);
 
 
 
 // table association
-module.exports = {User, Oauth}
+module.exports = {User}

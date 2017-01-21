@@ -21,7 +21,10 @@ const User = db.define('users', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  }
+  },
+  google_id: Sequelize.STRING,
+  accessToken: Sequelize.STRING,
+  refreshToken: Sequelize.STRING
 }, {
 	indexes: [{fields: ['email'], unique: true,}],
   hooks: {
