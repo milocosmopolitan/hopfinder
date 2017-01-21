@@ -14,18 +14,17 @@ export const Navbar = ({ user, logout, location }) => {
 	console.log('Navbar gets location from main.jsx', location)
 	return (
   <div id="appbar">  
-    <span className="whoami-user-name">{ user && user.name }</span>
-    <button className="logout" onClick={ logout }>Logout</button>
+    <span className="whoami-user-name">{ user && user.name }</span>    
   </div>
 	)
 }
 
-import { logout } from 'APP/app/reducers/auth'
+// import { logout } from 'APP/app/reducers/auth'
 import { connect } from 'react-redux'
 
 export default connect (
 	//state
   ({ auth }) => ({ user: auth }),
   //dispatch
-  { logout },
+  {  },
 ) (Navbar)
