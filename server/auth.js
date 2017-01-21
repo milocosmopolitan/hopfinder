@@ -1,11 +1,17 @@
 const app = require('APP'), {env} = app
+const fs = require('fs')
 const debug = require('debug')(`${app.name}:auth`)
 const passport = require('passport')
 
 const User = require('APP/db/models/user')
-const OAuth = require('APP/db/models/oauth')
+// const OAuth = require('APP/db/models/oauth')
 const auth = require('express').Router()
 
+const _exists = (filepath) => (
+  new Promise(resolve=>{
+    fs.exists(filepath, resolve)
+  })
+);
 
 /*************************
  * Auth strategies
@@ -48,18 +54,58 @@ const auth = require('express').Router()
 
 // Google needs the GOOGLE_CONSUMER_SECRET AND GOOGLE_CONSUMER_KEY
 // environment variables.
-OAuth.setupStrategy({
-  provider: 'google',
-  strategy: require('passport-google-oauth').Strategy,
-  config: {
-    consumerKey: env.GOOGLE_CONSUMER_KEY,
-    consumerSecret: env.GOOGLE_CONSUMER_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/login/google`,
+// OAuth.setupStrategy({
+//   provider: 'google',
+//   strategy: require('passport-google-oauth').Strategy,
+//   config: {
+//     consumerKey: env.GOOGLE_CONSUMER_KEY,
+//     consumerSecret: env.GOOGLE_CONSUMER_SECRET,
+//     callbackURL: `${app.rootUrl}/api/auth/login/google`,
+//   },
+//   passport
+// })
+
+
+const secret = require('APP/secret');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+passport.use(
+  new GoogleStrategy({
+    clientID: secret.google.key,
+    clientSecret: secret.google.secret,
+    callbackURL: '/api/auth/google/verify'
   },
-  passport
-})
+  function(accessToken, refreshToken, profile, done){
+    
+    return User.findOrCreate({
+      where: {        
+        google_id: profile.id,
+        accessToken: accessToken
+      }})
+      .then( user => {      
 
+        let data = {
+          name: profile.displayName,        
+          email: profile.emails[0].value,
+          photo: profile.photos[0].value,
+        };
 
+        return user[0].update(data)
+
+        // return User.create(data)
+        //   .then(user => {
+        //     return oauth[0].setUser(user)
+        //   })
+      })     
+      .then(user => {
+        console.log('After User.Create', user)
+        done(null, user)
+      })
+      .catch(err=>{
+        console.error(err)
+        done(err, null)
+      })
+  })
+);
 
 
 passport.serializeUser((user, done) => {
@@ -83,28 +129,7 @@ passport.deserializeUser(
   }
 )
 
-// passport.use(new (require('passport-local').Strategy) (
-//   (email, password, done) => {
-//     debug('will authenticate user(email: "%s")', email)
-//     User.findOne({where: {email}})
-//       .then(user => {
-//         if (!user) {
-//           debug('authenticate user(email: "%s") did fail: no such user', email)
-//           return done(null, false, { message: 'Login incorrect' })
-//         }
-//         return user.authenticate(password)
-//           .then(ok => {
-//             if (!ok) {
-//               debug('authenticate user(email: "%s") did fail: bad password')              
-//               return done(null, false, { message: 'Login incorrect' })
-//             }
-//             debug('authenticate user(email: "%s") did ok: user.id=%d', user.id)
-//             done(null, user)              
-//           })
-//       })
-//       .catch(done)
-//   }
-// ))
+auth.use('/google', require('./google'))
 
 // signup, i.e. "let `me` introduce myself"
 auth.post('/signup', function (req, res, next) {
@@ -147,7 +172,10 @@ auth.post('/login', function (req, res, next) {
       
       req.logIn(user, function (err) {
         if (err) return next(err);
-        console.log(user) 
+        // console.log(user) 
+        // req.session.cookie['user'] = user
+        console.log('SESSION FROM LOGIN', req.session)
+        console.log('USER FROM PASSPORT', req.user)
         res.json(user);
 
 
@@ -160,17 +188,44 @@ auth.post('/login', function (req, res, next) {
   .catch(next);
 });
 
-auth.get('/whoami', (req, res) => res.send(req.user))
+auth.get('/whoami', (req, res) => {
 
-// auth.post('/:strategy/login', (req, res, next) =>
-//   passport.authenticate(req.params.strategy, {
-//     successRedirect: '/'
-//   })(req, res, next)
-// )
+    
+  let sessionFile,
+      sessionPath = `${process.cwd()}/temp/sessions/${req.sessionID}.json`;
+  
+  _exists(sessionPath)
+    .then(exists=>{
+      if(!exists) res.sendStatus(401);
+      sessionFile = require(sessionPath);
+    })
+    .then(()=>User.findById(sessionFile.passport.user))
+    .then(user=>{
+      if (!user) {
+        debug('authenticate user(email: "%s") did fail: no such user', req.body.email)      
+        res.sendStatus(401); // no message; good practice to omit why auth fails
+      } else {
+        // with Passport:    
+        
+        req.logIn(user, function (err) {
+          if (err) return next(err);
+          // console.log(user) 
+          // req.session.cookie['user'] = user
+          // console.log('SESSION FROM LOGIN', req.session)
+          // console.log('USER FROM PASSPORT', req.user)
+          res.json(req.user);
+
+
+        });     
+      }
+    })
+})
 
 auth.post('/logout', (req, res, next) => {
-  req.logout()
-  res.redirect('/api/auth/whoami')
+  req.session.destroy(err=>{
+    req.logout()
+    res.redirect('/api/auth/whoami')  
+  })  
 })
 
 module.exports = auth
