@@ -26,40 +26,19 @@ require('./stylesheets/style.scss')
  * https://github.com/JedWatson/react-hammerjs
  */
 
-
-// const Root = ({ user, children, location }) => {
-//   /*
-//    * Uncomment two lines below and 
-//    * change the argument of this const to props for 
-//    * console.log all props that are being passed down
-//    * ================================================
-//    */
-//    // console.log('Root PROPS: ', props)
-//    // const { user, children, location } = props
-
-//   // if user is not logged in - open auth page 
-//   // or - open child route component
-//   return ( 
-//       <div>
-//         <Navbar location={location} />
-//         { children }
-//       </div> 
-//     )
-// }
-
 import { whoami } from './reducers/auth';
 
 class Root extends React.Component {
   constructor(props) {
     super(props);    
   }
-  componentDidMount() {
-    const { user, whoami, location } = this.props;
-    console.log('componentDidMount WHO AM I????')
-    whoami();
-    if(!user && location.pathname !== "/auth") {
-      browserHistory.push('/auth')
-    }
+  componentWillMount() {
+    this.props.whoami();
+  }
+  componentWillReceiveProps(nextProps) {    
+    console.log('Root componentWillReceiveProps', nextProps)    
+    if(!nextProps.user && this.props.location.pathname !== "/auth")
+      browserHistory.push('/auth')    
   }
   render(){
     const { children, location, user } = this.props
@@ -71,7 +50,6 @@ class Root extends React.Component {
     )
   }
 }
-
 
 const App = connect(
   // states
