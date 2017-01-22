@@ -4,7 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const {resolve} = require('path')
 const passport = require('passport')
-const cookieParser = require('cookie-parser')
+
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
 
@@ -76,7 +76,7 @@ module.exports = app
   
   // Serve static files from ../public
   .use(express.static(resolve(__dirname, '..', 'public')))
-  .use('/node_modules', express.static(resolve(__dirname, '..', '/node_modules')))
+  .use('/node_modules', express.static(resolve(__dirname, '..', 'node_modules')))
 
 
   // Serve our api

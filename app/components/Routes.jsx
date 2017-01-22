@@ -7,6 +7,7 @@ import { App, Home, Auth, News } from '../routes';
 /* Reducer */
 import { whoami } from '../reducers/auth'
 import { fetchNearByBreweries } from '../reducers/brewery'
+// import { getCurrentIP } from '../reducers/geolocation'
 
 const Routes = ({ fetchInitialData }) => (	
 
@@ -25,7 +26,8 @@ const mapProps = null;
 
 const mapDispatch = dispatch => ({
  fetchInitialData: () => {
-    dispatch(whoami());
+    // dispatch(getCurrentIP());
+    dispatch(whoami());    
     dispatch(fetchNearByBreweries());
     // what other data might we want to fetch on app load?
   }

@@ -1,19 +1,22 @@
 'use strict';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Row, Col } from 'react-bootstrap';
+import Brewery from '../components/Brewery';
 
 const News = (props)=>{
-	const {breweries} = props;
+	const {breweries} = props;	
 	return (
-		<div>
-			{ breweries ? breweries.map(brewery=>(
-				<div key={brewery.breweryId}>
-					{brewery.brewery.name}
-				</div>
-			)) : null
-			
-			}
-		</div>
+		<Grid id="breweries-wrapper" fluid={true}>
+			<Row>
+				<Col xs={12} md={6} mdOffset={3}>
+				{ breweries ? breweries.map(brewery=>(
+						<Brewery key={brewery.breweryId} {...brewery} />
+					)) : null
+				}
+				</Col>
+			</Row>
+		</Grid>
 		)
 }
 
