@@ -1,26 +1,16 @@
 'use strict';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col } from 'react-bootstrap';
-import Brewery from '../components/Brewery';
 
-const News = (props)=>{
-	const {breweries} = props;	
+const News = ()=>{
 	return (
-		<Grid id="breweries-wrapper" fluid={true}>
-			<Row>
-				<Col xs={12} md={6} mdOffset={3}>
-				{ breweries ? breweries.map(brewery=>(
-						<Brewery key={brewery.breweryId} {...brewery} />
-					)) : null
-				}
-				</Col>
-			</Row>
-		</Grid>
+		<div>
+			NEWS
+		</div>
 		)
 }
 
-const mapState = ({breweries})=>({breweries})
+const mapState = ()=>({})
 const mapDispatch = ()=>({})
 
 export default connect(mapState, mapDispatch)(News)
