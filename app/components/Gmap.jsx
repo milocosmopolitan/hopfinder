@@ -17,12 +17,19 @@ class Gmap extends React.Component {
     this.onMarkerClick = this.onMarkerClick.bind(this)
     this.onMapClicked = this.onMapClicked.bind(this)
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this)
+    this.addToFavorites = this.addToFavorites.bind(this)
 	}
 
-  // addToFavorites(e){
-  //   console.log(e.target)
-  //   this.state.selectedPlace
-  // }
+  addToFavorites(e){
+    // console.log(e.target)
+    // this.state.selectedPlace
+    let data = {
+      brewery_id: this.state.selectedPlace.breweryId,
+      user_id: this.state.auth.id
+    }
+    console.log('addToFavorites', data)
+    this.props.addFavorite(data)
+  }
 
 	onMarkerClick (props, marker, e) {    
     this.setState({
@@ -96,11 +103,12 @@ class Gmap extends React.Component {
             onClose={this.onInfoWindowClose}>
               { selectedPlace && selectedPlace.brewery ? 
                 ( 
-                  <div>
+                  <div id="info-wrapper">
                     <h4>{selectedPlace.brewery.name}</h4>
                     <h6>{selectedPlace.streetAddress}</h6>
                     <Link to={selectedPlace.brewery.website}>{selectedPlace.brewery.website}</Link>
-                    <Link onClick={this.addToFavorites}>Add to Favorites</Link>
+                    <div onClick={this.addToFavorites}>Add to Favorites</div>
+                    <a href="/">Add to Favoritesaaa</a>
                   </div>
                 ) : <div>No info for you</div>
               }              
