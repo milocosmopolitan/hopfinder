@@ -6,12 +6,8 @@ const passport = require('passport');
 const { User } = require('APP/db/models');
 
 
-
-
-
-
 // Google authentication and login
-router.get('/', passport.authenticate('google', { scope: 'email' }));
+router.get('/', passport.authenticate('google', { scope: 'email', failureRedirect: '/login' }));
 
 // handle the callback after Google has authenticated the user
 router.get('/verify',	

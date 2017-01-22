@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 const reducer = (state=null, action) => {
   switch(action.type) {
   case AUTHENTICATED:
-    return action.user || state
+    return action.user
   }
   return state
 }
@@ -36,6 +36,7 @@ export const whoami = () =>
       })
       .catch(failed => {
         dispatch(authenticated(null))
+        browserHistory.push('/auth')
       })
 
 export default reducer
