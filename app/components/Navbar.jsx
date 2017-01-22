@@ -14,7 +14,12 @@ class Navbar extends React.Component {
 		  	{ user ? (
 		  		<div>
 		  			<span className="whoami-user-name">{ user && user.name }</span>
-		  			<button className="logout" onClick={ logout }>Logout</button>
+            { user && user.password ? 
+              (
+                <button className="logout" onClick={ logout }>Logout</button>
+              ) : null 
+            }
+		  			
 	  			</div>
 		  		) : null 
 		  	}

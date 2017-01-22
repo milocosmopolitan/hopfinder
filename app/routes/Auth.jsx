@@ -7,19 +7,19 @@ import { whoami } from '../reducers/auth';
 
 class Auth extends React.Component {
 	constructor(props) {
-		super(props);		
-	}
+		super(props);
+	}	
 	componentWillReceiveProps(nextProps) {
 		console.log('Auth componentWillReceiveProps',nextProps)
 		if(nextProps.auth) browserHistory.push('/')
 	}
 	render(){
-		console.log('Auth', this.props)
-		return (
+		console.log('Auth', this.props)		
+		return  (
 			<div>
 				<Login /> 
 			</div>
-		)	
+		)
 	}
 	
 }
