@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, Link, browserHistory, IndexRedirect } from 'react-router';
 
-import { App, Home, Auth, News } from '../routes';
+import { App, Home, Auth, News, Places } from '../routes';
 
 /* Reducer */
 import { whoami } from '../reducers/auth'
@@ -16,6 +16,7 @@ const Routes = ({ fetchInitialData }) => (
         <Route path="/home" component={Home} />
         <Route path="/auth" component={Auth} />
         <Route path="/feed" component={News} />
+        <Route path="/places" component={Places} />
       </Route>
     </Router>
 )
