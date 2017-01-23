@@ -48,7 +48,7 @@ router.get('/verify',
       var token = utils.genToken(req.user); // <-- Generate token
       // user = utils.getCleanUser(user);          
       res.json({
-        user: user,
+        user: req.user,
         token: token
       });
 
