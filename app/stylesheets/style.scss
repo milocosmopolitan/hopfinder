@@ -16,17 +16,20 @@ $map-height: calc(100vh - $navbar-height);
 
 @import './Navbar.scss';
 @import './Brewery.scss';
+@import './News.scss';
 @import './Places.scss';
 
 body{  
   
 }
-.left {
-  float: left;  
-}
-.right {
-  float: right;  
-}
+
+
+// .left {
+//   float: left;  
+// }
+// .right {
+//   float: right;  
+// }
 .center {
   position: absolute;
   top: 50%;
