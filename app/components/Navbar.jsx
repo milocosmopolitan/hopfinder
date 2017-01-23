@@ -8,7 +8,12 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 class AppBar extends React.Component {
 	constructor(props) {
 		super(props);
+		this.onClickLogout = this.onClickLogout.bind(this)
 	}
+	onClickLogout(){
+    this.props.logout();
+    browserHistory.push('/');
+  }
 	render(){		
 		const { user, logout, location } = this.props;		
 
@@ -31,11 +36,11 @@ class AppBar extends React.Component {
 		      </Nav>
 		      { user ? (
 		      	<Nav pullRight>
-			        <NavItem eventKey={3} onClick={() => browserHistory.push("/follow")}>Favorites</NavItem>
-			        <NavItem eventKey={4} onClick={() => browserHistory.push("/account")}>{ user && user.name }</NavItem>
-			        { user && user.password ? 
+			        <NavItem eventKey={3}>Favorites</NavItem>
+			        <NavItem eventKey={4}>{ user && user.name }</NavItem>
+			        { user && !user.google_id ? 
 	              (
-	                <button className="logout">Logout</button>
+	                <NavItem eventKey={5} onClick={this.onClickLogout}>Logout</NavItem>
 	              ) : null 
 	            }
 			      </Nav>
