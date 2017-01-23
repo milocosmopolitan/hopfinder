@@ -27,11 +27,7 @@ export const fetchNearByBreweries = (lat, lng) => dispatch => {
 		axios.get(`//api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${lat}&lng=${lng}&withSocialAccounts=Y`)
 			.then(res=>res.data)
 	    .then(breweries=>dispatch(init(breweries.data)))
-	    .catch(err=>{
-	    	console.error(err)
-	    	let arr = []
-	    	dispatch(init(arr))
-	    })
+	    .catch(console.error)
 
   } else {
   	axios.get(`//api.ipify.org/?format=json`)		
@@ -39,11 +35,7 @@ export const fetchNearByBreweries = (lat, lng) => dispatch => {
 			.then(res=>axios.get(`//api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${res.data.latitude}&lng=${res.data.longitude}&withSocialAccounts=Y`))
 			.then(res=>res.data)
 	    .then(breweries=>dispatch(init(breweries.data)))
-			.catch(err=>{
-	    	console.error(err)
-	    	let arr = []
-	    	dispatch(init(arr))
-	    })
+			.catch(console.error)
 	}	
 }
 

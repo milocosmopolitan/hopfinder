@@ -1,7 +1,8 @@
 #appbar {
 	height: $navbar-height;
 	width: 100%;
-	background-color: $primary-color;
+	border-radius: 0;	
+	background-image: linear-gradient(to bottom,rgb(255, 227, 141) 0,$primary-color 100%);
 
 	&.collapse {
 		display: none;

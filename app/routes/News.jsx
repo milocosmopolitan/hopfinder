@@ -17,7 +17,7 @@ const News = (props)=>{
 					<Col xs={12} md={6}>
 					{
 						tweets.map(tweet => (
-					<LazyLoad key={`${tweet}`}>
+					<LazyLoad key={`${tweet}`} height={200}>
 						<TweetEmbed id={`${tweet}`} options={{width:100+"%"}}/>
 					</LazyLoad>
 						))
@@ -28,7 +28,7 @@ const News = (props)=>{
 					{
 						insta.map(function(inst, i){
 							return (
-								<LazyLoad key={i}>
+								<LazyLoad key={i} height={200}>
 									<InstagramEmbed url ={`${inst}`} maxWidth={500} />
 								</LazyLoad>
 							)

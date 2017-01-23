@@ -3,6 +3,7 @@
 const express        = require('express'),      
       passport       = require('passport'),
       bodyParser     = require('body-parser'),
+      cors           = require('cors'),
       {resolve}      = require('path'),
       pkg            = require('APP');
 
@@ -33,6 +34,7 @@ passport.deserializeUser(function (id, done) {
 
 module.exports = app
 
+  .use(cors())
   // Body parsing middleware
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
