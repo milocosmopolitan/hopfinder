@@ -6,7 +6,7 @@ import TweetEmbed from 'react-tweet-embed';
 import InstagramEmbed from 'react-instagram-embed';
 import LazyLoad from 'react-lazyload'
 
-const tweets = ['822534725046771713', '823215006212902912', '798544956109586432', '821761864023547904', '821778798605639682', '823256735070744578', '821449984201658368', '822899750093684737', '822550575099289600', '823233450132066304', '822506541458673664']
+const tweets = ['798544956109586432','822534725046771713','798544956109586432', '821761864023547904', '821778798605639682', '823256735070744578', '821449984201658368', '822899750093684737', '822550575099289600', '823233450132066304', '822506541458673664']
 
 const insta = ['https://www.instagram.com/p/BPab5RPAuOO/', 'https://www.instagram.com/p/BPfuiGnBFgr/', 'https://www.instagram.com/p/BPlioWmB1Re/', 'https://www.instagram.com/p/BPihV8Qgrwn/', 'https://www.instagram.com/p/BPdulMqgUtw', 'https://www.instagram.com/p/BPiL_ZfDgv0', 'https://www.instagram.com/p/BPito1Ejhwk', 'https://www.instagram.com/p/BPbA-ZrhkAw']
 
