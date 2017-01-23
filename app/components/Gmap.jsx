@@ -85,7 +85,7 @@ class Gmap extends React.Component {
         <Map google={google}
              style={{width: '100%', height: '90%', position: 'relative'}}
              className={'map'}
-             zoom={16}
+             zoom={13}
              containerStyle={{}}
              centerAroundCurrentLocation={true}
              initialCenter={initialCenter}
