@@ -2,22 +2,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const News = (props)=>{
-	const {breweries} = props;
+const News = ()=>{
 	return (
 		<div>
-			{ breweries ? breweries.map(brewery=>(
-				<div key={brewery.breweryId}>
-					{brewery.brewery.name}
-				</div>
-			)) : null
-			
-			}
+			NEWS
 		</div>
 		)
 }
 
-const mapState = ({breweries})=>({breweries})
+const mapState = ()=>({})
 const mapDispatch = ()=>({})
 
 export default connect(mapState, mapDispatch)(News)
