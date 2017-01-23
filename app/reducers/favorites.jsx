@@ -1,4 +1,5 @@
 import axios from 'axios'
+import cookie from 'react-cookie';
 
 const INITIALIZE = 'INITIALIZE_FAVORITES';
 const CREATE     = 'CREATE_FAVORITE';
@@ -26,7 +27,7 @@ export default (favorites=[], action) => {
 }
 
 export const fetchFavorites = () => dispatch => {
-  axios.get('/api/follow')
+  axios.get('/api/follow', { headers: { 'Authorization': cookie.load('token')} })
        .then(res => dispatch(init(res.data)))
        .catch(err => console.error('Fetching favorites unsuccessful', err));
 };

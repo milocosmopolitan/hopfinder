@@ -1,70 +1,37 @@
+/*jshint esversion: 6 */
 'use strict'
+const express        = require('express'),      
+      passport       = require('passport'),
+      bodyParser     = require('body-parser'),
+      {resolve}      = require('path'),
+      pkg            = require('APP');
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const {resolve} = require('path')
-const passport = require('passport')
+const app = express();
 
-const session = require('express-session')
-const FileStore = require('session-file-store')(session)
-
-
-// Bones has a symlink from node_modules/APP to the root of the app.
-// That means that we can require paths relative to the app root by
-// saying require('APP/whatever').
-//
-// This next line requires our root index.js:
-
-
-
-const pkg = require('APP')
-
-const app = express()
-
-
-let sessionSaveUninitialized = false;
-if (!pkg.isProduction && !pkg.isTesting) {
-  sessionSaveUninitialized = true;
-  // Logging middleware (dev only)
+if (!pkg.isProduction && !pkg.isTesting) {  
   app.use(require('volleyball'))
 }
 
-let sessionLife = 86400000;
-const sess_options = {
-  // genid: function(req) {
-  //   return genuuid() // use UUIDs for session IDs
-  // },
-  path: `${process.cwd()}/temp/sessions/`,
-  useAsync: true,
-  reapInterval: 5000,
-  httpOnly: false,
-  maxAge: sessionLife
-};
+// passport.serializeUser(function (user, done) {
+//   console.log('serializeUser')
+//   done(null, user);
+// });
+
+// passport.deserializeUser(function (id, done) {
+//   console.log('deserializeUser', id)
+//   User.findById(id)
+//     .then(user => {
+//       debug('deserialize did ok user.id=%d', user.id)
+//       done(null, user)
+//     })
+//     .catch(err => {
+//       debug('deserialize did fail err=%s', err)
+//       done(err)
+//     })
+// });
 
 
 module.exports = app
-
-  .use(session({
-    name: 'server-session-cookie-id',
-    store: new FileStore(sess_options),
-    secret: 'singlecut',
-    resave: false,
-    saveUninitialized: sessionSaveUninitialized
-  }))
-
-  // We might use this later
-  // .use(function printSession(req, res, next) {
-  //   console.log('req.session', req.session);
-  //   return next();
-  // })
-
-  // .get('/', function initViewsCount(req, res, next) {
-  //   if(typeof req.session.views === 'undefined') {
-  //     req.session.views = 1;
-  //     return res.end('Welcome to the file session demo. Refresh page!');
-  //   }
-  //   return next();
-  // })
 
   // Body parsing middleware
   .use(bodyParser.urlencoded({ extended: true }))
@@ -72,7 +39,7 @@ module.exports = app
 
   // Authentication middleware
   .use(passport.initialize())
-  .use(passport.session())
+  // .use(ejwt({secret: jwtsecret, userProperty: 'tokenPayload'}).unless({path: ['/api/auth/signin']}))
   
   // Serve static files from ../public
   .use(express.static(resolve(__dirname, '..', 'public')))
