@@ -1,16 +1,28 @@
 'use strict';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Row, Col } from 'react-bootstrap';
+import TweetEmbed from 'react-tweet-embed';
 
-const News = ()=>{
+const tweets = ['822534725046771713', '823215006212902912', '798544956109586432', '821761864023547904', '821778798605639682', '823256735070744578', '821449984201658368', '822899750093684737', '822550575099289600', '823233450132066304', '822506541458673664']
+
+
+const News = (props)=>{
 	return (
-		<div>
-			NEWS
-		</div>
+			<Grid id="news-wrapper" fluid={true}>
+				<Row>
+					<Col xs={12} md={6} mdOffSet={3}>
+					{tweets.map(tweet => (
+						<TweetEmbed key={`${tweet}`} id={`${tweet}`} />
+						))
+					}
+				</Col>
+			</Row>
+		</Grid>
 		)
 }
 
-const mapState = ()=>({})
+const mapState = ({})=>({News})
 const mapDispatch = ()=>({})
 
 export default connect(mapState, mapDispatch)(News)
