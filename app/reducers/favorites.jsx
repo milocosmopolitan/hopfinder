@@ -9,7 +9,7 @@ const create = favorite => ({ type: CREATE, favorite });
 const remove  = id => ({ type: REMOVE, id });
 
 
-const FavoritesReducer = (favorites=[], action) => {
+export default (favorites=[], action) => {
 	switch(action.type) {
 		case INITIALIZE:
 			return action.favorites
@@ -38,8 +38,12 @@ export const removeFavorite = id => dispatch => {
        .catch(err => console.error(`Removing favorite: ${id} unsuccessful`, err));
 };
 
-export const addFavorite = favorite => dispatch => {
-  axios.post('/api/follow', favorite)
+export const addFavorite = (favorite, brewery) => dispatch => {
+	let data = {
+		favorite,
+		brewery
+	}
+  axios.post('/api/follow', data)
        .then(res => dispatch(create(res.data)))
        .catch(err => console.error(`Creating favorite: ${favorite} unsuccessful`, err));
 };
