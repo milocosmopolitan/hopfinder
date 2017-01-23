@@ -37,7 +37,7 @@ class Contents extends React.Component {
   }
 
   renderAutoComplete() {
-    const {google, map} = this.props;
+    const {google, map, fetchNearByBreweries} = this.props;
 
     console.log('renderAutoComplete',this.props)
     if (!google || !map) return;
@@ -60,20 +60,24 @@ class Contents extends React.Component {
               })
             };
 
-
       if (!place.geometry) {
         return;
       }
 
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
+
       } else {
         map.setCenter(place.geometry.location);
-        map.setZoom(17);
-        //search function
+        map.setZoom(13);
+        //search function        
       }
-      search()
 
+      let latitude = place.geometry.location.lat(),
+          longitude = place.geometry.location.lng()
+      console.log('place.geometry', place.geometry.location.lat(), place.geometry.location.lat)
+      search()
+      fetchNearByBreweries(latitude, longitude)
       this.setState({
         place: place,
         position: place.geometry.location

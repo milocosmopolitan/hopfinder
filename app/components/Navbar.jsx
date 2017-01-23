@@ -38,7 +38,7 @@ class AppBar extends React.Component {
 		      	<Nav pullRight>
 			        <NavItem eventKey={3}>Favorites</NavItem>
 			        <NavItem eventKey={4}>{ user && user.name }</NavItem>
-			        { user && user.password && !user.google_id ? 
+			        { user && !user.google_id ? 
 	              (
 	                <NavItem eventKey={5} onClick={this.onClickLogout}>Logout</NavItem>
 	              ) : null 

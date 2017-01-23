@@ -67,7 +67,7 @@ export default (props) =>{
 							brewery.socialAccounts && brewery.socialAccounts.length ?
 							brewery.socialAccounts.map(socialAcc=>{
 								let socialMediaName = socialAcc.socialMedia.name.toLowerCase().split(' ')[0];
-								console.log(socialMediaName)
+								// console.log(socialMediaName)
 								const socialMediaIconClass = classNames({
 									'fa' : true,
 						  		'fa-google': (socialMediaName === 'google'),
@@ -76,7 +76,7 @@ export default (props) =>{
 						  		'fa-facebook': (socialMediaName === 'facebook')
 								});
 								
-								return ( <Link to={socialAcc.link} target="_blank"><i className={socialMediaIconClass}></i></Link>	)
+								return ( <Link to={socialAcc.link} target="_blank" key={socialAcc.id}><i className={socialMediaIconClass}></i></Link>	)
 							}) : null
 						}						
 					</div>
