@@ -1,14 +1,15 @@
-import React from 'react'
-import { logout } from '../reducers/auth'
-import { connect } from 'react-redux'
+import React from 'react';
+import { logout } from '../reducers/auth';
+import { connect } from 'react-redux';
+import { Link, browserHistory } from 'react-router';
 import classNames from 'classnames';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-class Navbar extends React.Component {
+class AppBar extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-	render(){
-		
+	render(){		
 		const { user, logout, location } = this.props;		
 
 		const appBarClass = classNames({
@@ -16,33 +17,33 @@ class Navbar extends React.Component {
 		});
 
 		return (
-		  <div id="appbar" className={appBarClass}>  
-		  	<div id="logo">Logo</div>
-		  	<div className="left">
-		  		<ul>
-		  			<li>News</li>
-		  			<li>Places</li>
-		  		</ul>
-		  	</div>		  	
-		  	<div className="right">
-		  		<ul>		  			
-		  			<li>My Account</li>
-		  		</ul>
-		  	</div>
-		  	{ user ? (
-		  		<div>
-		  			<span className="whoami-user-name">{ user && user.name }</span>
-            { user && user.password ? 
-              (
-                <button className="logout" onClick={ logout }>Logout</button>
-              ) : null 
-            }
-		  			
-	  			</div>
-		  		) : null 
-		  	}
-		  	<div className="clear"></div>
-		  </div>
+			<Navbar id="appbar" className={appBarClass} collapseOnSelect>
+		    <Navbar.Header>
+		      <Navbar.Brand id="logo">
+		        <Link to="/">Hopfinder</Link>
+		      </Navbar.Brand>
+		      <Navbar.Toggle />
+		    </Navbar.Header>
+		    <Navbar.Collapse>
+		      <Nav>
+		        <NavItem eventKey={1} onClick={() => browserHistory.push("/feed")}>News</NavItem>
+		        <NavItem eventKey={2} onClick={() => browserHistory.push("/places")}>Map</NavItem>		        
+		      </Nav>
+		      { user ? (
+		      	<Nav pullRight>
+			        <NavItem eventKey={3} onClick={() => browserHistory.push("/follow")}>Favorites</NavItem>
+			        <NavItem eventKey={4} onClick={() => browserHistory.push("/account")}>{ user && user.name }</NavItem>
+			        { user && user.password ? 
+	              (
+	                <button className="logout">Logout</button>
+	              ) : null 
+	            }
+			      </Nav>
+			  		) : null 
+			  	}
+		      
+		    </Navbar.Collapse>
+		  </Navbar>
 		)
 	}
 }
@@ -52,4 +53,4 @@ export default connect (
   ({ auth }) => ({ user: auth }),
   //dispatch
   { logout },
-) ( Navbar )
+) ( AppBar )
