@@ -64,12 +64,20 @@ class Gmap extends React.Component {
   }
 
 	render() {
+
+		console.log('Places Component rendering with props:', this.props)
+    console.log('Places Component rendering with state:', this.state)
+    const style = {
+			width: '100vw',
+			height: '100vh'
+		}
+		// const initialCenter = {
+		// 	lat: 40.730500,
+		// 	lng: -73.935241
+		// }
+
 		console.log('Gmap Component rendering with props, state:', this.props, this.state)
     
-		const initialCenter = {
-			lat: 40.730500,
-			lng: -73.935241
-		}
 
 		if(!this.props.loaded) {
 			return <div>Loading...</div>
@@ -79,13 +87,19 @@ class Gmap extends React.Component {
           { google, breweries, location } = this.props;
     // console.log(breweries)
 
+    const initialCenter = {
+      lat: 40.705076,
+      lng: -74.0113487
+    }
 
 		return (
       <div id="map-wrapper">   
         <Map google={google}
              style={{width: '100%', height: '90%', position: 'relative'}}
              className={'map'}
-             zoom={13}
+
+             zoom={14}
+
              containerStyle={{}}
              centerAroundCurrentLocation={true}
              initialCenter={initialCenter}
