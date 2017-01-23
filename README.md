@@ -1,6 +1,7 @@
 # Hopfinder 0.0.1
-brewery / beer finder web app by Daniel Kang & Milo Kang.
+brewery finder / brewery news feed web app by Daniel Kang & Milo Kang.
 
+## Intended to help craft beer lovers find local breweries and keep up to date on the latest news and releases from their favorite brewers.
 
 
 ## Requirements
