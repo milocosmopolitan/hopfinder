@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import cookie from 'react-cookie';
 
 const reducer = (state=null, action) => {
   switch(action.type) {
@@ -16,8 +17,8 @@ export const authenticated = user => ({
 
 export const login = (email, password) =>
   dispatch =>
-    axios.post('/api/auth/login',
-      {email, password})
+    axios.post('/api/auth/signin', { email, password })
+      .then((res) => { cookie.save('token', res.data.token, {path:'/'}) })
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))      
 
@@ -29,11 +30,8 @@ export const logout = () =>
 
 export const whoami = () =>
   dispatch =>
-    axios.get('/api/auth/whoami')
-      .then(response => {
-        const user = response.data
-        dispatch(authenticated(user))
-      })
+    axios.get('/api/auth/me', { headers: { 'Authorization': cookie.load('token')} })
+      .then(res => { dispatch(authenticated(res.data)) })
       .catch(failed => {
         dispatch(authenticated(null))
         browserHistory.push('/auth')
