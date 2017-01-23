@@ -6,15 +6,14 @@ import Brewery from '../components/Brewery';
 
 const Breweries = (props)=>{
 	console.log('News PROPS', props)
-	const { breweries, location } = props;
+	const { breweries } = props;
 	return (
 		<Grid id="breweries-wrapper" fluid={true}>
 			<Row>
 				<Col xs={12} md={6} mdOffset={3}>
 				{ breweries ? breweries.map(brewery=>(
 						<Brewery 
-							key={brewery.breweryId} 
-							location={location} 
+							key={brewery.breweryId} 							 
 							{...brewery} />
 					)) : null
 				}

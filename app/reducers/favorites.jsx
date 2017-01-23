@@ -9,7 +9,7 @@ const create = favorite => ({ type: CREATE, favorite });
 const remove  = id => ({ type: REMOVE, id });
 
 
-const FavoritesReducer = (favorites=[], action) => {
+export default (favorites=[], action) => {
 	switch(action.type) {
 		case INITIALIZE:
 			return action.favorites

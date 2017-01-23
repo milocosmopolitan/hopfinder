@@ -13,12 +13,6 @@ export default (props) =>{
 	const image = brewery.images && brewery.images.squareMedium ? 
 								brewery.images.squareMedium : 
 								'http://placehold.it/100x100';
-	function renderBreweryCard(){
-
-	}
-	function renderBreweryDetail(){
-		
-	}
 
 	return (
 		<Grid className="brewery-wrapper" fluid={true}>
