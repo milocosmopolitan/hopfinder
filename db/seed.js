@@ -1,5 +1,4 @@
 const db = require('APP/db')
-const axios = require('axios')
 const { User, Follow, Breweries } = require('APP/db/models')
 
 const data = {

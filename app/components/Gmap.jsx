@@ -5,7 +5,7 @@ import Map, { GoogleApiWrapper, Marker, InfoWindow, HeatMap } from 'google-maps-
 import PlaceInfo from './PlaceInfo';
 import Contents from './Autocomplete';
 import { Link } from 'react-router';
-
+import Breweries from '../routes/Breweries'
 
 
 class Gmap extends React.Component {
@@ -64,6 +64,7 @@ class Gmap extends React.Component {
   }
 
 	render() {
+
 		console.log('Places Component rendering with props:', this.props)
     console.log('Places Component rendering with state:', this.state)
     const style = {
@@ -75,11 +76,15 @@ class Gmap extends React.Component {
 		// 	lng: -73.935241
 		// }
 
+		console.log('Gmap Component rendering with props, state:', this.props, this.state)
+    
+
 		if(!this.props.loaded) {
 			return <div>Loading...</div>
 		}
     //const {breweries} = this.props
-    const {activeMarker, showingInfoWindow, selectedPlace} = this.state;
+    const { activeMarker, showingInfoWindow, selectedPlace } = this.state,
+          { google, breweries, location } = this.props;
     // console.log(breweries)
 
     const initialCenter = {
@@ -89,10 +94,12 @@ class Gmap extends React.Component {
 
 		return (
       <div id="map-wrapper">   
-        <Map google={this.props.google}
+        <Map google={google}
              style={{width: '100%', height: '90%', position: 'relative'}}
              className={'map'}
+
              zoom={14}
+
              containerStyle={{}}
              centerAroundCurrentLocation={true}
              initialCenter={initialCenter}
@@ -101,8 +108,8 @@ class Gmap extends React.Component {
                  
 
           {
-            this.props.breweries.length ? 
-            this.props.breweries.map(brewery => (
+            breweries.length ? 
+            breweries.map(brewery => (
               // console.log(brewery.brewery.website)
               <Marker key={brewery.breweryId} 
                       onClick={this.onMarkerClick}
@@ -122,6 +129,7 @@ class Gmap extends React.Component {
                 : <div>No info for you</div>
               }              
           </InfoWindow>
+          <Breweries {...this.props} />
           <Contents {...this.props} />
         </Map>      
         
