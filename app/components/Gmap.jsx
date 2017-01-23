@@ -29,12 +29,13 @@ class Gmap extends React.Component {
   addToFavorites(e){
     // console.log(e.target)
     // this.state.selectedPlace
-    let data = {
+    let favorite = {
       brewery_id: this.state.selectedPlace.breweryId,
       user_id: this.state.auth.id
     }
-    console.log('addToFavorites', data)
-    this.props.addFavorite(data)
+    
+    console.log('addToFavorites', favorite)
+    this.props.addFavorite(favorite, this.state.selectedPlace)
   }
 
 	onMarkerClick (props, marker, e) {    
