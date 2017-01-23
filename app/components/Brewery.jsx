@@ -4,15 +4,43 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Grid, Row, Col } from  'react-bootstrap'
 
+import store from '../store';
 export default (props) =>{
 	const {
+		auth, 
 		brewery, phone, 
 		streetAddress, locality, region, country, 
-		latitude, longitude } = props;
+		latitude, longitude,
+		addFavorite, removeFavorite } = props;
 
 	const image = brewery.images && brewery.images.squareMedium ? 
 								brewery.images.squareMedium : 
 								'http://placehold.it/100x100';
+
+	const addToFavorites=(e)=>{
+    // console.log(e.target)
+    // this.state.selectedPlace
+    let data = {
+    	favorite: {
+    		brewery_id: brewery.id,
+      	user_id: auth.id	
+    	},
+    	brewery: {
+    		brewery: brewery,
+    		phone: phone, 
+				streetAddress:streetAddress, 
+				locality: locality, 
+				region:region, 
+				country:country, 
+				latitude:latitude, 
+				longitude:longitude
+    	}
+    }    
+    
+    console.log('addToFavorites', data.favorite, data.brewery)
+    console.log(addFavorite)
+    store.dispatch(addFavorite(data.favorite, data.brewery))
+  } 
 
 	return (
 		<Grid className="brewery-wrapper" fluid={true}>
@@ -32,7 +60,7 @@ export default (props) =>{
 				</Col>
 				<Col xs={12}>
 					<div className="brewery-actions">
-						<Link><i className="fa fa-heart-o"></i></Link>
+						<Link onClick={(e)=>addToFavorites(e)}><i className="fa fa-heart-o"></i></Link>
 						<Link><i className="fa fa-plus">Detail</i></Link>
 					</div>
 					<div className="brewery-social-links">

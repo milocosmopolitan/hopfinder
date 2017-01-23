@@ -7,6 +7,7 @@ const db = require('APP/db')
 
 const User = require('./user')
 const Follow = require('./follow')
+const Breweries = require('./breweries')
 // const Oauth = require('./oauth')
 
 Follow.belongsTo(User);

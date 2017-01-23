@@ -9,7 +9,8 @@
     "build": "check-node-version --node '>= 6.7.0' && bin/setup && webpack",
     "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
     "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js --ignore ./temp/*",
-    "seed": "bin/setup && node db/seed.js"
+    "seed": "bin/setup && node db/seed.js",
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
@@ -70,8 +71,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^6.1.2",
     "pg-native": "^1.10.0",
-    "react": "^15.4.2",
-    "react-addons-clone-with-props": "^0.14.8",
+    "react": "^15.4.2",    
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
