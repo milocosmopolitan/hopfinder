@@ -16,7 +16,9 @@ export const authenticated = user => ({
 })
 export const googleAuth = () => dispatch => 
   axios.get('/api/auth/google')
-    .then((res) => { cookie.save('token', res.data.token, {path:'/'}) })
+    .then((res) => { 
+      console.log(res)
+      cookie.save('token', res.data.token, {path:'/'}) })
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))      
 

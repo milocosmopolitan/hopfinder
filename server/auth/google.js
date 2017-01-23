@@ -46,11 +46,12 @@ router.get('/verify',
       if (err) return next(err);
 
       var token = utils.genToken(req.user); // <-- Generate token
-      // user = utils.getCleanUser(user);          
-      res.json({
-        user: req.user,
-        token: token
-      });
+      // user = utils.getCleanUser(user);  
+      res.redirect(`/?token=${token}`)
+      // res.json({
+      //   user: req.user,
+      //   token: token
+      // });
 
     })
   }
