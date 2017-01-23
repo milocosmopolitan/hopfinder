@@ -7,13 +7,13 @@ $pastel-tone: #7f9a78;
 $button-bg-color: #348AA7;
 $button-border-color: #166E84;
 
-@import  url(https://fonts.googleapis.com/css?family=Montserrat);
+
 @import './Navbar.scss';
 @import './Brewery.scss';
 @import './Places.scss';
 
 body{  
-  font-family: Montserrat;
+  
 }
 
 .center {
