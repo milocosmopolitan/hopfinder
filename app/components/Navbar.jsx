@@ -1,5 +1,5 @@
 import React from 'react'
-import { logout } from 'APP/app/reducers/auth'
+import { logout } from '../reducers/auth'
 import { connect } from 'react-redux'
 
 class Navbar extends React.Component {

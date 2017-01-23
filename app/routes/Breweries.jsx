@@ -6,15 +6,23 @@ import Brewery from '../components/Brewery';
 import {removeFavorite, addFavorite} from '../reducers/favorites';
 
 const Breweries = (props)=>{
-	console.log('News PROPS', props)
-	const { breweries, auth } = props;
+
+	console.log('Breweries props', props)
+	const { breweries, location, params, auth } = props;
+
 	return (
 		<Grid id="breweries-wrapper" fluid={true}>
 			<Row>
-				<Col xs={12} md={6} mdOffset={3}>
+				<Col 
+					xs={12} 
+					md={location.pathname === '/places' ? 12 : 6} 
+					mdOffset={location.pathname === '/places' ? 0 : 3}>
 				{ breweries ? breweries.map(brewery=>(
 						<Brewery 
-							key={brewery.breweryId} 
+
+							key={brewery.breweryId}
+							location={location}
+							params={params}
 							auth={auth}
 							addFavorite={addFavorite}
 							removeFavorite={removeFavorite}
