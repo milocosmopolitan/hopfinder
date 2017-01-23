@@ -10,7 +10,7 @@ const tweets = ['822534725046771713', '823215006212902912', '798544956109586432'
 
 const insta = ['https://www.instagram.com/p/BPab5RPAuOO/', 'https://www.instagram.com/p/BPfuiGnBFgr/', 'https://www.instagram.com/p/BPlioWmB1Re/', 'https://www.instagram.com/p/BPihV8Qgrwn/', 'https://www.instagram.com/p/BPdulMqgUtw', 'https://www.instagram.com/p/BPiL_ZfDgv0', 'https://www.instagram.com/p/BPito1Ejhwk', 'https://www.instagram.com/p/BPbA-ZrhkAw']
 
-const News = (props)=>{
+const News = ()=>{
 	return (
 			<Grid id="news-wrapper" fluid={true}>
 					<Col xs={12} md={6} mdOffSet={3}>
@@ -31,37 +31,8 @@ const News = (props)=>{
 		)
 }
 
-const mapState = ({})=>({News})
+const mapState = ({})=>({})
 const mapDispatch = ()=>({})
-
-import Brewery from '../components/Brewery';
-
-const News = (props)=>{
-	console.log('News props', props)
-	const { favorites, location, params } = props;
-	return (
-		<Grid id="news-wrapper" fluid={true}>
-			<Row>
-				<Col 
-					xs={12} 
-					md={location.pathname === '/places' ? 12 : 6} 
-					mdOffset={location.pathname === '/places' ? 0 : 3}>
-				{ favorites ? favorites.map(favorite=>(
-						<Brewery 
-							key={favorite.brewery.breweryId}
-							location={location}
-							params={params}
-							{...favorite.brewery} />
-					)) : null
-				}
-				</Col>
-			</Row>
-		</Grid>
-		);
-};
-
-const mapState = ({favorites})=>({favorites});
-const mapDispatch = {};
 
 
 export default connect(mapState, mapDispatch)(News);
