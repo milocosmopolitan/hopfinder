@@ -76,7 +76,7 @@ export default (props) =>{
 						  		'fa-facebook': (socialMediaName === 'facebook')
 								});
 								
-								return ( <Link to={socialAcc.link}><i className={socialMediaIconClass}></i></Link>	)
+								return ( <Link to={socialAcc.link} target="_blank"><i className={socialMediaIconClass}></i></Link>	)
 							}) : null
 						}						
 					</div>
