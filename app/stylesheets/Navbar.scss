@@ -2,4 +2,8 @@
 	height: $navbar-height;
 	width: 100%;
 	background-color: $primary-color;
+
+	&.collapse {
+		display: none;
+	}	
 }

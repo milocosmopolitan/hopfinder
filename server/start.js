@@ -12,23 +12,23 @@ if (!pkg.isProduction && !pkg.isTesting) {
   app.use(require('volleyball'))
 }
 
-// passport.serializeUser(function (user, done) {
-//   console.log('serializeUser')
-//   done(null, user);
-// });
+passport.serializeUser(function (user, done) {
+  console.log('serializeUser')
+  done(null, user);
+});
 
-// passport.deserializeUser(function (id, done) {
-//   console.log('deserializeUser', id)
-//   User.findById(id)
-//     .then(user => {
-//       debug('deserialize did ok user.id=%d', user.id)
-//       done(null, user)
-//     })
-//     .catch(err => {
-//       debug('deserialize did fail err=%s', err)
-//       done(err)
-//     })
-// });
+passport.deserializeUser(function (id, done) {
+  console.log('deserializeUser', id)
+  User.findById(id)
+    .then(user => {
+      debug('deserialize did ok user.id=%d', user.id)
+      done(null, user)
+    })
+    .catch(err => {
+      debug('deserialize did fail err=%s', err)
+      done(err)
+    })
+});
 
 
 module.exports = app
@@ -45,7 +45,18 @@ module.exports = app
   .use(express.static(resolve(__dirname, '..', 'public')))
   .use('/node_modules', express.static(resolve(__dirname, '..', 'node_modules')))
 
-
+  .all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
+     // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+  })
   // Serve our api
   .use('/api', require('./api'))
 

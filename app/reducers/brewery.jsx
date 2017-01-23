@@ -20,24 +20,30 @@ const BreweryReducer = (breweries=[], action) => {
 
 
 export const fetchNearByBreweries = (lat, lng) => dispatch => {
-	console.log('fetchNearByBreweries')
-
+	
+	let protocol = window.location.protocol === 'http:' ? '' : window.location.protocolcors;
+	console.log('fetchNearByBreweries', protocol)
 	if(lat && lng){
-		axios.get(`https://api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${lat}&lng=${lng}&withSocialAccounts=Y`)
+		axios.get(`//api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${lat}&lng=${lng}&withSocialAccounts=Y`)
 			.then(res=>res.data)
-	    .then(breweries=>{
-	      dispatch(init(breweries.data))
+	    .then(breweries=>dispatch(init(breweries.data)))
+	    .catch(err=>{
+	    	console.error(err)
+	    	let arr = []
+	    	dispatch(init(arr))
 	    })
-	    .catch(console.error)
+
   } else {
-  	axios.get('https://api.ipify.org/?format=json')		
-			.then(res=>axios.get(`https://freegeoip.net/json/?q=${res.data.ip}`))
-			.then(res=>axios.get(`https://api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${res.data.latitude}&lng=${res.data.longitude}&withSocialAccounts=Y`))
+  	axios.get(`//api.ipify.org/?format=json`)		
+			.then(res=>axios.get(`//freegeoip.net/json/?q=${res.data.ip}`))
+			.then(res=>axios.get(`//api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${res.data.latitude}&lng=${res.data.longitude}&withSocialAccounts=Y`))
 			.then(res=>res.data)
-	    .then(breweries=>{
-	      dispatch(init(breweries.data))
+	    .then(breweries=>dispatch(init(breweries.data)))
+			.catch(err=>{
+	    	console.error(err)
+	    	let arr = []
+	    	dispatch(init(arr))
 	    })
-			.catch(console.error)
 	}	
 }
 

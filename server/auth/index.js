@@ -19,11 +19,11 @@ const fs        = require('fs'),
   // const OAuth = require('APP/db/models/oauth')
 // global.localStorage = require('localStorage')
 
-const _exists = (filepath) => (
-  new Promise(resolve => {
-    fs.exists(filepath, resolve)
-  })
-);
+// const _exists = (filepath) => (
+//   new Promise(resolve => {
+//     fs.exists(filepath, resolve)
+//   })
+// );
 
 
 // Local Strategy
