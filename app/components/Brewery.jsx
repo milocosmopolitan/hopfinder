@@ -22,7 +22,7 @@ export default (props) =>{
     // this.state.selectedPlace
     let data = {
     	favorite: {
-    		brewery_id: brewery.id,
+    		brewdb_id: brewery.id,
       	user_id: auth.id	
     	},
     	brewery: {

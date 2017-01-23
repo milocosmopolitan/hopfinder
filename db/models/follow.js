@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const db = require('APP/db')
 
 const Follow = db.define('follow', {
-	brewery_id: {
+	brewdb_id: {
 		type: Sequelize.STRING,
 		allowNull: false
 	}

@@ -11,8 +11,9 @@ const Breweries = require('./breweries')
 // const Oauth = require('./oauth')
 
 Follow.belongsTo(User);
+Follow.belongsTo(Breweries);
 
 
 
 // table association
-module.exports = {User, Follow}
+module.exports = {User, Follow, Breweries}
