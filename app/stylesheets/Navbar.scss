@@ -1,4 +1,5 @@
 #appbar {
+	z-index: 100;
 	height: $navbar-height;
 	width: 100%;
 	border-radius: 0;	
@@ -7,4 +8,5 @@
 	&.collapse {
 		display: none;
 	}	
+	
 }
