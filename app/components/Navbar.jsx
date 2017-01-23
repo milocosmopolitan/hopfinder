@@ -1,6 +1,7 @@
 import React from 'react'
 import { logout } from '../reducers/auth'
 import { connect } from 'react-redux'
+import classNames from 'classnames';
 
 class Navbar extends React.Component {
 	constructor(props) {
@@ -9,8 +10,13 @@ class Navbar extends React.Component {
 	render(){
 		
 		const { user, logout, location } = this.props;		
+
+		const appBarClass = classNames({
+  		'collapse': (location.pathname === '/auth')
+		});
+
 		return (
-		  <div id="appbar">  
+		  <div id="appbar" className={appBarClass}>  
 		  	<div id="logo">Logo</div>
 		  	<div className="left">
 		  		<ul>
@@ -35,6 +41,7 @@ class Navbar extends React.Component {
 	  			</div>
 		  		) : null 
 		  	}
+		  	<div className="clear"></div>
 		  </div>
 		)
 	}
