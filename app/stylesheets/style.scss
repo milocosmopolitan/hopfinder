@@ -1,3 +1,4 @@
+/* color schema */
 $primary-color: #ffc000;
 $cream-vivid: #ffecb2;
 $cream-grey: #f0ead9;
@@ -7,6 +8,11 @@ $pastel-tone: #7f9a78;
 $button-bg-color: #348AA7;
 $button-border-color: #166E84;
 
+/* grid */
+$navbar-height: 64px;
+$map-height: calc(100vh - $navbar-height);
+
+
 
 @import './Navbar.scss';
 @import './Brewery.scss';
@@ -15,7 +21,12 @@ $button-border-color: #166E84;
 body{  
   
 }
-
+.left {
+  float: left;  
+}
+.right {
+  float: right;  
+}
 .center {
   position: absolute;
   top: 50%;
