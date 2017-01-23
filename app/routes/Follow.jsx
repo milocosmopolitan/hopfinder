@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 
 const Follow = (props)=>{
 	const {favorites} = props
+	console.log(favorites)
 	return (
 		<div>
 			{ 
 				favorites ? 
 				favorites.map(favorite=>(
-					<div key={favorite.brewery_id}>{favorite.brewery_id}</div>
+					<div key={favorite.brewery_id}>{favorite.brewery.name}</div>
 				)) : null
 			}
 		</div>
