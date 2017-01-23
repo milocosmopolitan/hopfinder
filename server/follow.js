@@ -7,10 +7,11 @@ const Breweries = db.model('breweries')
 
 module.exports = require('express').Router()
 	.get('/', (req, res, next) => 
-		Follow.findAll({
+		Follow.findAll({			
 			where:{
 				user_id: req.user.id
-			}
+			},
+			include: [Breweries]
 		})
 		.then(favorites => {
 			console.log(favorites)
@@ -21,9 +22,9 @@ module.exports = require('express').Router()
 		.post('/', (req, res, next) => {
 			console.log(req.body)
 			Breweries.findOrCreate({
-					where: {brewery_id: req.body.brewery.brewery.id},
+					where: {brewdb_id: req.body.brewery.brewery.id},
 					defaults: {
-						brewery_id: req.body.brewery.brewery.id,
+						brewdb_id: req.body.brewery.brewery.id,
 						name: req.body.brewery.brewery.name,
 						website: req.body.brewery.brewery.website,
 						latitude: req.body.brewery.latitude,
@@ -32,6 +33,7 @@ module.exports = require('express').Router()
 				})
 				.spread((brewery, created)=>{
 					console.log(brewery)
+					
 					return Follow.create(req.body.favorite)
 				})
 				.then(favorite => res.status(201).json(favorite))

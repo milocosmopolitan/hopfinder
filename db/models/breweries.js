@@ -3,7 +3,7 @@ const db = require('APP/db')
 const Sequelize = require('sequelize')
 
 module.exports = db.define('breweries', {
-	brewery_id: {
+	brewdb_id: {
 		type: Sequelize.STRING
 	},
 	name:{
