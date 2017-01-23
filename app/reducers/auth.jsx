@@ -14,6 +14,11 @@ const AUTHENTICATED = 'AUTHENTICATED'
 export const authenticated = user => ({
   type: AUTHENTICATED, user
 })
+export const googleAuth = () => dispatch => 
+  axios.get('/api/auth/google')
+    .then((res) => { cookie.save('token', res.data.token, {path:'/'}) })
+      .then(() => dispatch(whoami()))
+      .catch(() => dispatch(whoami()))      
 
 export const login = (email, password) =>
   dispatch =>
