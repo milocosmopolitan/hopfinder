@@ -1,7 +1,7 @@
 import React from 'react';
 import { logout } from '../reducers/auth';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import classNames from 'classnames';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 

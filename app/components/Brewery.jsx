@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import classNames from 'classnames';
 import { Grid, Row, Col } from  'react-bootstrap'
 
 import store from '../store';
@@ -62,10 +63,22 @@ export default (props) =>{
 						<Link><i className="fa fa-plus">Detail</i></Link>
 					</div>
 					<div className="brewery-social-links">
-						<Link><i className="fa fa-globe"></i></Link>
-						<Link><i className="fa fa-facebook"></i></Link>
-						<Link><i className="fa fa-twitter"></i></Link>
-						<Link><i className="fa fa-instagram"></i></Link>
+						{
+							brewery.socialAccounts && brewery.socialAccounts.length ?
+							brewery.socialAccounts.map(socialAcc=>{
+								let socialMediaName = socialAcc.socialMedia.name.toLowerCase().split(' ')[0];
+								console.log(socialMediaName)
+								const socialMediaIconClass = classNames({
+									'fa' : true,
+						  		'fa-google': (socialMediaName === 'google'),
+						  		'fa-twitter': (socialMediaName === 'twitter'),
+						  		'fa-instagram': (socialMediaName === 'instagram'),
+						  		'fa-facebook': (socialMediaName === 'facebook')
+								});
+								
+								return ( <Link to={socialAcc.link}><i className={socialMediaIconClass}></i></Link>	)
+							}) : null
+						}						
 					</div>
 				</Col>
 			</Row>
