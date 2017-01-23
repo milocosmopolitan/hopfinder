@@ -1,5 +1,5 @@
 import React from 'react';
-import { login } from '../reducers/auth';
+import { login, googleAuth } from '../reducers/auth';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router'
 
