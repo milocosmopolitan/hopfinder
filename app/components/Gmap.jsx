@@ -1,8 +1,10 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux';
 import Map, { GoogleApiWrapper, Marker, InfoWindow, HeatMap } from 'google-maps-react';
-import Contents from './Autocomplete'
-import { Link } from 'react-router'
+import PlaceInfo from './PlaceInfo';
+import Contents from './Autocomplete';
+import { Link } from 'react-router';
 
 
 
@@ -19,6 +21,10 @@ class Gmap extends React.Component {
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this)
     this.addToFavorites = this.addToFavorites.bind(this)
 	}
+
+  addInfoWindowEvents(){
+    ReactDOM.findDOMNode(this).addEventListener('nv-enter', this.addToFavorites);
+  }
 
   addToFavorites(e){
     // console.log(e.target)
@@ -38,6 +44,7 @@ class Gmap extends React.Component {
       activeMarker: marker,
       showingInfoWindow: true
     });
+    // this.addInfoWindowEvents()
   }
 
   onInfoWindowClose() {
@@ -74,6 +81,8 @@ class Gmap extends React.Component {
     //const {breweries} = this.props
     const {activeMarker, showingInfoWindow, selectedPlace} = this.state;
     // console.log(breweries)
+
+
 		return (
       <div id="map-wrapper">   
         <Map google={this.props.google}
@@ -99,19 +108,14 @@ class Gmap extends React.Component {
           }
 
           <InfoWindow
+            id="info-wrapper"
             marker={activeMarker}
             visible={showingInfoWindow}
             onClose={this.onInfoWindowClose}>
-              { selectedPlace && selectedPlace.brewery ? 
-                ( 
-                  <div id="info-wrapper">
-                    <h4>{selectedPlace.brewery.name}</h4>
-                    <h6>{selectedPlace.streetAddress}</h6>
-                    <Link to={selectedPlace.brewery.website}>{selectedPlace.brewery.website}</Link>
-                    <div onClick={this.addToFavorites}>Add to Favorites</div>
-                    <a href="/">Add to Favoritesaaa</a>
-                  </div>
-                ) : <div>No info for you</div>
+              { 
+                selectedPlace && selectedPlace.brewery 
+                ? <PlaceInfo selectedPlace={selectedPlace} /> 
+                : <div>No info for you</div>
               }              
           </InfoWindow>
           <Contents {...this.props} />

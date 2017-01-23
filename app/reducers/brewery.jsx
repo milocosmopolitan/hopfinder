@@ -20,41 +20,25 @@ const BreweryReducer = (breweries=[], action) => {
 
 
 export const fetchNearByBreweries = (lat, lng) => dispatch => {
-	var options = {
-		  enableHighAccuracy: true,
-		  timeout: 5000,
-		  maximumAge: 0
-		};
+	console.log('fetchNearByBreweries')
 
-		function success(pos) {
-		  var crd = pos.coords;
-
-		  console.log('Your current position is:');
-		  console.log(`Latitude : ${crd.latitude}`);
-		  console.log(`Longitude: ${crd.longitude}`);
-		  console.log(`More or less ${crd.accuracy} meters.`);
-		};
-
-		function error(err) {
-		  console.warn(`ERROR(${err.code}): ${err.message}`);
-		};
-
-		navigator.geolocation.getCurrentPosition(success, error, options);
-		
-	axios.get(`//api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${40.778187}&lng=${-73.900679}`)
-		.then(res=>res.data)
-    .then(breweries=>{
-      dispatch(init(breweries.data))
-    })
+	if(lat && lng){
+		axios.get(`//api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${lat}&lng=${lng}&withSocialAccounts=Y`)
+			.then(res=>res.data)
+	    .then(breweries=>{
+	      dispatch(init(breweries.data))
+	    })
+	    .catch(console.error)
+  } else {
+  	axios.get('//api.ipify.org/?format=json')		
+			.then(res=>axios.get(`//freegeoip.net/json/?q=${res.data.ip}`))
+			.then(res=>axios.get(`//api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${res.data.latitude}&lng=${res.data.longitude}&withSocialAccounts=Y`))
+			.then(res=>res.data)
+	    .then(breweries=>{
+	      dispatch(init(breweries.data))
+	    })
+			.catch(console.error)
+	}	
 }
-
-
-// export const fetchBreweries = () => dispatch => {
-// 	axios.get(`//api.brewerydb.com/v2/breweries/?key=${key}`)
-// 		.then(res=>res.data)
-//     .then(breweries=>{
-//       dispatch(init(breweries.data))
-//     })
-// }
 
 export default BreweryReducer;

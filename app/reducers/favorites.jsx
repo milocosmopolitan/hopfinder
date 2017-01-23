@@ -38,12 +38,11 @@ export const removeFavorite = id => dispatch => {
        .catch(err => console.error(`Removing favorite: ${id} unsuccessful`, err));
 };
 
-export const addFavorite = (favorite, brewery) => dispatch => {
-	let data = {
-		favorite,
-		brewery
-	}
-  axios.post('/api/follow', data)
+export const addFavorite = (favorite, brewery) => dispatch => {	
+  axios.post('/api/follow', {
+		favorite: favorite,
+		brewery: brewery
+	})
        .then(res => dispatch(create(res.data)))
        .catch(err => console.error(`Creating favorite: ${favorite} unsuccessful`, err));
 };

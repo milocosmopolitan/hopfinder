@@ -19,10 +19,11 @@ module.exports = require('express').Router()
 		.catch(next))
 
 		.post('/', (req, res, next) => {
+			console.log(req.body)
 			Breweries.findOrCreate({
-					where: {brewery_id: req.body.brewery.breweryId},
+					where: {brewery_id: req.body.brewery.brewery.id},
 					defaults: {
-						brewery_id: req.body.brewery.breweryId,
+						brewery_id: req.body.brewery.brewery.id,
 						name: req.body.brewery.brewery.name,
 						website: req.body.brewery.brewery.website,
 						latitude: req.body.brewery.latitude,
@@ -33,7 +34,6 @@ module.exports = require('express').Router()
 					console.log(brewery)
 					return Follow.create(req.body.favorite)
 				})
-				.then(()=>Follow.create(req.body.favorite))				
 				.then(favorite => res.status(201).json(favorite))
 				.catch(next)
 		})
