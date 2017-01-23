@@ -5,7 +5,7 @@ import { Router, Route, Link, browserHistory, IndexRedirect } from 'react-router
 
 import { App, Home, Auth, News, Places, Follow, Breweries } from '../routes';
 
-/* Reducer */
+/* Reducers */
 import { whoami } from '../reducers/auth'
 import { fetchNearByBreweries } from '../reducers/brewery'
 import { fetchFavorites } from '../reducers/favorites'
@@ -13,10 +13,9 @@ import { fetchFavorites } from '../reducers/favorites'
 
 const Routes = ({ fetchInitialData }) => (	
 
-		<Router history={browserHistory}>
+	<Router history={browserHistory}>
       <Route path="/" component={App} onEnter={fetchInitialData}>
-        <IndexRedirect to="/feed" />
-        <Route path="/home" component={Home} />
+        <IndexRedirect to="/feed" />        
         <Route path="/auth" component={Auth} />
         <Route path="/feed" component={News} />
         <Route path="/breweries" component={Breweries} />
@@ -30,8 +29,7 @@ const Routes = ({ fetchInitialData }) => (
 const mapProps = null;
 
 const mapDispatch = dispatch => ({
- fetchInitialData: () => {
-    // dispatch(getCurrentIP());
+ fetchInitialData: () => {    
     dispatch(whoami());    
     dispatch(fetchNearByBreweries());
     dispatch(fetchFavorites());

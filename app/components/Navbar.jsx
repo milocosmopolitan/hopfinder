@@ -11,6 +11,18 @@ class Navbar extends React.Component {
 		const { user, logout, location } = this.props;		
 		return (
 		  <div id="appbar">  
+		  	<div id="logo">Logo</div>
+		  	<div className="left">
+		  		<ul>
+		  			<li>News</li>
+		  			<li>Places</li>
+		  		</ul>
+		  	</div>		  	
+		  	<div className="right">
+		  		<ul>		  			
+		  			<li>My Account</li>
+		  		</ul>
+		  	</div>
 		  	{ user ? (
 		  		<div>
 		  			<span className="whoami-user-name">{ user && user.name }</span>

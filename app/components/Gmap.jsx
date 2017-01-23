@@ -26,15 +26,20 @@ class Gmap extends React.Component {
     ReactDOM.findDOMNode(this).addEventListener('nv-enter', this.addToFavorites);
   }
 
-  addToFavorites(e){
-    // console.log(e.target)
-    // this.state.selectedPlace
+  addToFavorites(e){    
+    // Google InfoWindow is meant to store stringfied html 
+    // which doesn't allow us to pur javascript function
+    // There is hacky way to solve the issue....
+    // with ReactDOM.findNode('asdff')
+    // and add / remove event listener
+    // this might take a while to finish
+
     let favorite = {
       brewery_id: this.state.selectedPlace.breweryId,
       user_id: this.state.auth.id
     }
     
-    console.log('addToFavorites', favorite)
+    // console.log('addToFavorites', favorite)
     this.props.addFavorite(favorite, this.state.selectedPlace)
   }
 
@@ -43,8 +48,7 @@ class Gmap extends React.Component {
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
-    });
-    // this.addInfoWindowEvents()
+    });    
   }
 
   onInfoWindowClose() {
@@ -64,21 +68,8 @@ class Gmap extends React.Component {
   }
 
 	render() {
-
-		console.log('Places Component rendering with props:', this.props)
-    console.log('Places Component rendering with state:', this.state)
-    const style = {
-			width: '100vw',
-			height: '100vh'
-		}
-		// const initialCenter = {
-		// 	lat: 40.730500,
-		// 	lng: -73.935241
-		// }
-
 		console.log('Gmap Component rendering with props, state:', this.props, this.state)
     
-
 		if(!this.props.loaded) {
 			return <div>Loading...</div>
 		}

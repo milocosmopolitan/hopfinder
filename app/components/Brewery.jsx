@@ -17,9 +17,7 @@ export default (props) =>{
 								brewery.images.squareMedium : 
 								'http://placehold.it/100x100';
 
-	const addToFavorites=(e)=>{
-    // console.log(e.target)
-    // this.state.selectedPlace
+	const addToFavorites=(e)=>{    
     let data = {
     	favorite: {
     		brewdb_id: brewery.id,
@@ -37,10 +35,10 @@ export default (props) =>{
     	}
     }    
     
-    console.log('addToFavorites', data.favorite, data.brewery)
-    console.log(addFavorite)
+    // console.log('addToFavorites', data.favorite, data.brewery)
+    // console.log(addFavorite)
     store.dispatch(addFavorite(data.favorite, data.brewery))
-  } 
+  }
 
 	return (
 		<Grid className="brewery-wrapper" fluid={true}>

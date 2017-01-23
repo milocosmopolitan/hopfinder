@@ -19,47 +19,6 @@ const _exists = (filepath) => (
   })
 );
 
-const secret = require('APP/secret');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-passport.use(
-  new GoogleStrategy({
-    clientID: secret.google.key,
-    clientSecret: secret.google.secret,
-    callbackURL: '/api/auth/google/verify'
-  },
-  function(accessToken, refreshToken, profile, done){
-    
-    return User.findOrCreate({
-      where: {        
-        google_id: profile.id,
-        accessToken: accessToken
-      }})
-      .then( user => {      
-
-        let data = {
-          name: profile.displayName,        
-          email: profile.emails[0].value,
-          photo: profile.photos[0].value,
-        };
-
-        return user[0].update(data)        
-        // return User.create(data)
-        //   .then(user => {
-        //     return oauth[0].setUser(user)
-        //   })
-      })     
-      .then(user => {       
-        store.set('user', user)
-        done(null, user)
-      })
-      .catch(err=>{
-        console.error(err)
-        done(err, null)
-      })
-  })
-);
-
-
 passport.serializeUser((user, done) => {
   debug('will serialize user.id=%d', user.id)
   done(null, user.id)
