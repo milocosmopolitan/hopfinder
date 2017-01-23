@@ -3,12 +3,17 @@ import { login } from '../reducers/auth';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router'
 
-const Login = ({ login }) => {
+const Login = ({ login, googleAuth }) => {
 
   function loginWithCredential(evt){
     evt.preventDefault()    
     login(evt.target.email.value, evt.target.password.value)
     browserHistory.push('/')    
+  }
+  function loginWithGoogle(evt){
+    evt.preventDefault()    
+    googleAuth()
+    browserHistory.push('/')
   }
   const style = {
     backgroundImage: `url("./favicon-144.png")`
@@ -40,5 +45,5 @@ export default connect (
   //state
   state => ({}),
   //dispatch
-  { login },
+  { login, googleAuth },
 ) ( Login )
