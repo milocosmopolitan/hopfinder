@@ -1,6 +1,7 @@
 const router 				 = require('express').Router(),
 			passport 			 = require('passport'),
 			{ User } 			 = require('APP/db/models'),
+      utils          = require('../utils'),
 			secret   			 = require('APP/secret'),
 			GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
@@ -23,7 +24,9 @@ passport.use(new GoogleStrategy({
           photo: profile.photos[0].value,
       	}
     	))
-      .then(user => { done(null, user) })
+      .then(user => { 
+        done(null, user) 
+      })
       .catch(err => { done(err, null) })
   ));
 
@@ -38,8 +41,19 @@ router.get('/', passport.authenticate('google', {
 router.get('/verify',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log('verify callback URL')
-    res.redirect(`/`);
+    req.logIn(req.user, (err) => {
+      console.log('user signed in', req.user, err)  
+      if (err) return next(err);
+
+      var token = utils.genToken(req.user); // <-- Generate token
+      // user = utils.getCleanUser(user);  
+      res.redirect(`/?token=${token}`)
+      // res.json({
+      //   user: req.user,
+      //   token: token
+      // });
+
+    })
   }
 );
 

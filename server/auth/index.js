@@ -208,9 +208,11 @@ passport.use(new JwtStrategy(opts, (jwt_payload, next) => {
 
 auth.use('/google', require('./google'))
 
-auth.post('/logout', (req, res, next) => {  
-  req.logout()
-  res.redirect('/api/auth/me')  
+auth.post('/logout', (req, res, next) => { 
+  req.session.destroy(function(err) {
+    req.logout()
+    res.redirect('/')  
+  })   
 })
 
 module.exports = auth

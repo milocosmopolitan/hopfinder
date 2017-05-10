@@ -24,6 +24,7 @@ export const fetchNearByBreweries = (lat, lng) => dispatch => {
 	let protocol = window.location.protocol === 'http:' ? '' : window.location.protocolcors;
 	console.log('fetchNearByBreweries', protocol)
 	if(lat && lng){
+		console.log(lat, lng)
 		axios.get(`//api.brewerydb.com/v2/search/geo/point/?key=${key}&lat=${lat}&lng=${lng}&withSocialAccounts=Y`)
 			.then(res=>res.data)
 	    .then(breweries=>dispatch(init(breweries.data)))
